@@ -16,10 +16,9 @@ from django.db import models
 class Products(models.Model):
     """Items in the store records."""
 
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        primary_key=True
+        on_delete=models.CASCADE
     )
 
     product_name = models.CharField(
@@ -30,7 +29,7 @@ class Products(models.Model):
     product_amount = models.IntegerField(
         blank=False,
         validators=[
-            MinValueValidator(1),
+            MinValueValidator(0),
             MaxValueValidator(100),
         ]
     )

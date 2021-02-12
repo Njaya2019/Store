@@ -39,3 +39,19 @@ class ProductsSerializer(serializers.ModelSerializer):
                 }
             },
         }
+
+    def create(self, validated_data):
+        """
+        Save product.
+
+        Argument: validated_data. A dictionary of valid values.
+        If all fields are valid this method will add the,
+        product.
+        """
+        new_product = Products.objects.create(
+            user=self.context['request'].user,
+            product_name=validated_data['product_name'],
+            product_amount=validated_data['product_amount'],
+        )
+
+        return new_product

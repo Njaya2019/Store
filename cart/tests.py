@@ -1,5 +1,5 @@
 """
-Tests Products view.
+Tests Cart view.
 
 Tests values passed to the view.
 """
@@ -10,11 +10,12 @@ import pytest
 
 
 @pytest.mark.django_db
-class TestProductsView():
+class TestCartView():
     """
-    Products test.
+    Cart test.
 
-    Tests for .
+    Tests for validility of items passed to the,
+    cart.
     """
 
     # A mock of the values to be passed the SignIn view.
@@ -28,7 +29,7 @@ class TestProductsView():
     client = APIClient()
 
     @pytest.fixture()
-    def signUp_user(self):
+    def signup(self):
         """
         Signup fixture.
 
@@ -50,7 +51,7 @@ class TestProductsView():
         return data
 
     @pytest.fixture()
-    def logs_user_in(self, signUp_user):
+    def login(self, signup):
         """Logs a user in."""
         response = self.client.post(
             '/users/signin', {
@@ -64,11 +65,12 @@ class TestProductsView():
 
         return data
 
-    def test_empty_productName(self, logs_user_in):
-        """Tests an empty product name field."""
+    @pytest.fixture()
+    def adds_product(self, login):
+        """A fixture to add a product."""
         response = self.client.post(
             '/products/add_product', {
-                "product_name": '',
+                "product_name": self.product_name,
                 "product_amount": self.product_amount,
                 }
         )
@@ -76,16 +78,28 @@ class TestProductsView():
         data = response.content
         data = loads(data)
 
-        assert response.status_code == 400
-        assert data["product_name"][0] == "Please provide"\
-            " product_name value"
+        return data
 
-    def test_empty_productAmount(self, logs_user_in):
-        """Tests an empty product amount field."""
+    @pytest.fixture()
+    def adds_another_product(self, login):
+        """A fixture to add another product."""
         response = self.client.post(
             '/products/add_product', {
                 "product_name": self.product_name,
-                "product_amount": '',
+                "product_amount": 0,
+                }
+        )
+
+        data = response.content
+        data = loads(data)
+
+        return data
+    
+    def test_amountToOrder_invalidKey(self, adds_product):
+        """Tests invalid amount to order field key."""
+        response = self.client.post(
+            '/cart/1/add_to_cart', {
+                "product_nam": self.product_name,
                 }
         )
 
@@ -93,15 +107,14 @@ class TestProductsView():
         data = loads(data)
 
         assert response.status_code == 400
-        assert data["product_amount"][0] == "Please provide"\
-            " product_amount value"
+        assert data["amount_to_order"][0] == "Please provide"\
+            " amount_to_order as key"
 
-    def test_minValue_productAmount(self, logs_user_in):
-        """Tests minimum value in product amount field."""
+    def test_amountToOrder_greaterThanStock(self, adds_product):
+        """Tests if amount to order field is greater than stock."""
         response = self.client.post(
-            '/products/add_product', {
-                "product_name": self.product_name,
-                "product_amount": -2,
+            '/cart/1/add_to_cart', {
+                "amount_to_order": 10,
                 }
         )
 
@@ -109,15 +122,29 @@ class TestProductsView():
         data = loads(data)
 
         assert response.status_code == 400
-        assert data["product_amount"][0] == "Ensure this value is"\
-            " greater than or equal to 0."
+        assert data["error"] == "The amount you are"\
+            " ordering is greater than the 8 items avaibale"
 
-    def test_maxValue_productAmount(self, logs_user_in):
-        """Tests maximum value in product amount field."""
+    def test_productToOrder_notFound(self, adds_product):
+        """Tests if a product doesn't exist."""
         response = self.client.post(
-            '/products/add_product', {
-                "product_name": self.product_name,
-                "product_amount": 100000,
+            '/cart/10/add_to_cart', {
+                "amount_to_order": 4,
+                }
+        )
+
+        data = response.content
+        data = loads(data)
+
+        assert response.status_code == 404
+        assert data["detail"] == "Sorry the product"\
+            " doesn't exist"
+
+    def test_productOut_ofStock(self, adds_another_product):
+        """Tests if a product is out of stock."""
+        response = self.client.post(
+            '/cart/1/add_to_cart', {
+                "amount_to_order": 4,
                 }
         )
 
@@ -125,5 +152,5 @@ class TestProductsView():
         data = loads(data)
 
         assert response.status_code == 400
-        assert data["product_amount"][0] == "Ensure this value is"\
-            " less than or equal to 100."
+        assert data["error"] == "Sorry we've ran out of stock "\
+            "for this product"

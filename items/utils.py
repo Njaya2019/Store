@@ -48,3 +48,16 @@ class isAuthenticated(BasePermission):
         if not request.user.is_authenticated:
             raise AuthenticationException
         return True
+
+
+class ProductNotFound(APIException):
+    """
+    Product exists.
+
+    This exception provide a good custom error message,
+    when a product doesn't exist.
+    """
+
+    status_code = 404
+    default_detail = 'Sorry the product doesn\'t exist'
+    default_code = "product_not_found"
