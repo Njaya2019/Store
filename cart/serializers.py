@@ -54,11 +54,17 @@ class CartSerializer(serializers.ModelSerializer):
         If all fields are valid this method will add the,
         product to the cart.
         """
-        self.context['product_object'].product_amount  -= validated_data['amount_to_order']
-        new_item = Cart.objects.create(
+        new_item_obj, created = Cart.objects.get_or_create(
             user=self.context['request'].user,
             product=self.context['product_object'],
-            amount_to_order=validated_data['amount_to_order'],
+            ordered=False,
+            defaults={'amount_to_order': validated_data['amount_to_order']}
         )
 
-        return new_item
+        if not created:
+            if int(new_item_obj.amount_to_order) + int(validated_data['amount_to_order']) > 100:
+                new_item_obj.amount_to_order = new_item_obj.amount_to_order
+            else:
+                new_item_obj.amount_to_order = int(new_item_obj.amount_to_order) + int(validated_data['amount_to_order'])
+        new_item_obj.save()
+        return new_item_obj
