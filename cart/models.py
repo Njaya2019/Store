@@ -47,7 +47,14 @@ class Cart(models.Model):
 def update_stock(sender, instance, **kwargs):
     """Updates numbers of products in the store"""
     if int(instance.product.product_amount) != 0:
-        instance.product.product_amount -= instance.amount_to_order
+        # if the difference of the amount ordered and the stock is
+        # a negative value, it leaves the stock number as it was.
+        if (instance.product.product_amount - instance.amount_to_order) < 0:
+            instance.product.product_amount = instance.product.product_amount
+        else:
+            # Updates the stock
+            instance.product.product_amount -= instance.amount_to_order
     else:
+        # if stock is 0, it remains 0
         instance.product.product_amount = instance.product.product_amount 
     instance.product.save()

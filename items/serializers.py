@@ -48,10 +48,21 @@ class ProductsSerializer(serializers.ModelSerializer):
         If all fields are valid this method will add the,
         product.
         """
-        new_product = Products.objects.create(
+        # Checks if the product object already exists
+        # if yes, it updates the product amount else,
+        # creates 
+        obj_product, created = Products.objects.get_or_create(
             user=self.context['request'].user,
             product_name=validated_data['product_name'],
-            product_amount=validated_data['product_amount'],
+            defaults={'product_amount': validated_data['product_amount']}
         )
-
-        return new_product
+        if not created:
+            # if amount added plus stock is greater than 100
+            # return the old stock. 100 is the maximum number
+            # of items allowed in the stock.
+            if int(obj_product.product_amount) + int(validated_data['product_amount']) > 100:
+                obj_product.product_amount = obj_product.product_amount
+            else:
+                obj_product.product_amount = int(obj_product.product_amount) + int(validated_data['product_amount'])
+        obj_product.save()
+        return obj_product
