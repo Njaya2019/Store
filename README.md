@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Njaya2019/Store.svg?branch=develop)](https://travis-ci.org/Njaya2019/Store)[![Coverage Status](https://coveralls.io/repos/github/Njaya2019/Store/badge.svg?branch=develop)](https://coveralls.io/github/Njaya2019/Store?branch=develop)
 # Store
 An API where an admin add products, customers adds product items to the cart and then process the order can order their desired items in the cart.
 
