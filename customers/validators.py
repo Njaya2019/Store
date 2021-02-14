@@ -38,11 +38,11 @@ class FieldValidator:
             return False
         else:
             return True
-    
+
     @staticmethod
     def is_valid_fullname(name):
         """
-        Validates name.
+        Validate name.
 
         Makes a user to create a valid name.
         """

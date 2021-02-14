@@ -45,16 +45,18 @@ class CartView(APIView):
             if int(product_object.product_amount) == 0:
                 return Response(
                     {
-                        "error": "Sorry we've ran out of stock "\
-                            "for this product"
+                        "error": "Sorry we've ran out of stock "
+                        "for this product"
                     },
                     status=400
-                ) 
-            elif int(prdct_amnt_Dict['amount_to_order']) > int(product_object.product_amount):
+                )
+            elif int(prdct_amnt_Dict['amount_to_order'])\
+                    > int(product_object.product_amount):
                 return Response(
                     {
                         "error": "The amount you are ordering is"
-                            " greater than the {} items avaibale".format(product_object.product_amount)
+                        " greater than the {} items avaibale"
+                        .format(product_object.product_amount)
                     },
                     status=400
                 )

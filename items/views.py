@@ -25,7 +25,7 @@ class ProductsView(APIView):
     permission_classes = [isAuthenticated, ]
 
     def get_object(self, p_k):
-        """Gets a product object"""
+        """Get a product object."""
         try:
             return Products.objects.get(pk=p_k)
         except Products.DoesNotExist:

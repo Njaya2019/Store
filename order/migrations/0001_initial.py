@@ -2,7 +2,6 @@
 
 import datetime
 from django.conf import settings
-import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
 
@@ -13,17 +12,16 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('cart', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Products',
+            name='Orders',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('product_name', models.CharField(max_length=30)),
-                ('product_price', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(1000000)])),
-                ('product_amount', models.IntegerField(validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(100)])),
-                ('date_added', models.DateField(default=datetime.date.today)),
+                ('date_ordered', models.DateTimeField(default=datetime.datetime(2021, 2, 14, 3, 34, 53, 225750))),
+                ('cart', models.ManyToManyField(to='cart.Cart')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
