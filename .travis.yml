@@ -4,7 +4,7 @@ python:
   - "3.6"
   
 env:
-  DATABASE_URL: psql://postgres:''@localhost/test_db
+  DATABASE_URL: postgresql://postgres:''@localhost/test_db
 
 install:
  - pip install -r requirements.txt
