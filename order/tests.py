@@ -51,7 +51,7 @@ class TestOrdersView():
 
     @pytest.fixture()
     def login(self, signup):
-        """Logs a user in."""
+        """Log a user in."""
         response = self.client.post(
             '/users/signin', {
                 "email": self.email,
@@ -66,11 +66,12 @@ class TestOrdersView():
 
     @pytest.fixture()
     def adds_product(self, login):
-        """A fixture to add a product."""
+        """Fixture to add a product."""
         response = self.client.post(
             '/products/add_product', {
                 "product_name": self.product_name,
                 "product_amount": self.product_amount,
+                "product_price": 10,
                 }
         )
 
@@ -78,10 +79,10 @@ class TestOrdersView():
         data = loads(data)
 
         return data
-    
+
     @pytest.fixture()
     def adds_product_toCart(self, adds_product):
-        """A fixture that adds a product to the cart."""
+        """Fixture that adds a product to the cart."""
         response = self.client.post(
             '/cart/1/add_to_cart', {
                 "amount_to_order": 4,
@@ -92,7 +93,7 @@ class TestOrdersView():
         data = loads(data)
 
         return data
-    
+
     def test_make_order(self, adds_product_toCart):
         """Tests an order has been successfully requested."""
         response = self.client.post(

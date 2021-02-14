@@ -209,4 +209,3 @@ class TestUsersSignUp():
 
         assert response.status_code == 400
         assert data["firstname"][0] == "Please provide firstname key"
-

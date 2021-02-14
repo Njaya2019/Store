@@ -51,7 +51,7 @@ class TestProductsView():
 
     @pytest.fixture()
     def logs_user_in(self, signUp_user):
-        """Logs a user in."""
+        """Log a user in."""
         response = self.client.post(
             '/users/signin', {
                 "email": self.email,

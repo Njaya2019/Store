@@ -1,7 +1,7 @@
 """
 Cart model.
 
-This creates a cart database for products that are 
+This creates a cart database for products that are
 about to be ordered.
 """
 
@@ -37,15 +37,30 @@ class Cart(models.Model):
         ]
     )
 
+    total_price = models.IntegerField(
+        blank=False
+    )
+
     ordered = models.BooleanField(
         default=False
     )
+
+    def save(self, *args, **kwargs):
+        """
+        Override save.
+
+        Updates the total price by multiplying
+        the product quantity and it's price.
+        """
+        self.total_price = self.amount_to_order * self.product.product_price
+        super().save(*args, **kwargs)
+
 
 # This reciever updates the product stock number when a
 # user adds the product to the Cart.
 @receiver(post_save, sender=Cart, dispatch_uid="update_stock_count")
 def update_stock(sender, instance, **kwargs):
-    """Updates numbers of products in the store"""
+    """Update numbers of products in the store."""
     if int(instance.product.product_amount) != 0:
         # if the difference of the amount ordered and the stock is
         # a negative value, it leaves the stock number as it was.
@@ -56,5 +71,5 @@ def update_stock(sender, instance, **kwargs):
             instance.product.product_amount -= instance.amount_to_order
     else:
         # if stock is 0, it remains 0
-        instance.product.product_amount = instance.product.product_amount 
+        instance.product.product_amount = instance.product.product_amount
     instance.product.save()

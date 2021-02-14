@@ -25,6 +25,13 @@ class Products(models.Model):
         max_length=30,
         blank=False,
     )
+    product_price = models.IntegerField(
+        blank=False,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(1000000),
+        ]
+    )
 
     product_amount = models.IntegerField(
         blank=False,
@@ -33,7 +40,6 @@ class Products(models.Model):
             MaxValueValidator(100),
         ]
     )
-
     date_added = models.DateField(
         default=datetime.date.today,
         blank=False

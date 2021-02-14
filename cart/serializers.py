@@ -26,15 +26,16 @@ class CartSerializer(serializers.ModelSerializer):
         source='product.product_name',
         read_only=True
     )
+
     class Meta:
         """The model and fields to be serialized."""
 
         model = Cart
         fields = [
             'id', 'user', 'product',
-            'amount_to_order',
+            'amount_to_order', 'total_price'
         ]
-        read_only_fields = ['user', 'product']
+        read_only_fields = ['user', 'product', 'total_price']
         depth = 1
         extra_kwargs = {
             "amount_to_order": {
@@ -45,7 +46,7 @@ class CartSerializer(serializers.ModelSerializer):
                 }
             },
         }
-    
+
     def create(self, validated_data):
         """
         Save product to cart.
@@ -54,17 +55,29 @@ class CartSerializer(serializers.ModelSerializer):
         If all fields are valid this method will add the,
         product to the cart.
         """
+        # gets the cart object if it exists otherwise creates
+        # new cart object and returns it.
         new_item_obj, created = Cart.objects.get_or_create(
             user=self.context['request'].user,
             product=self.context['product_object'],
             ordered=False,
             defaults={'amount_to_order': validated_data['amount_to_order']}
         )
-
+        # created is a boolean which checks if the new object
+        # was added or not. if it wasn't means the product is in
+        # the cart model and if it hasn't been ordered yet
+        # increament the product quantity to be ordered.
         if not created:
-            if int(new_item_obj.amount_to_order) + int(validated_data['amount_to_order']) > 100:
-                new_item_obj.amount_to_order = new_item_obj.amount_to_order
+            # returns the old product quantity
+            if int(new_item_obj.amount_to_order) +\
+                    int(validated_data['amount_to_order']) > 100:
+                new_item_obj.amount_to_order =\
+                    new_item_obj.amount_to_order
             else:
-                new_item_obj.amount_to_order = int(new_item_obj.amount_to_order) + int(validated_data['amount_to_order'])
+                # updates the new product quantity to be
+                # ordered in the cart
+                new_item_obj.amount_to_order =\
+                    int(new_item_obj.amount_to_order)\
+                    + int(validated_data['amount_to_order'])
         new_item_obj.save()
         return new_item_obj

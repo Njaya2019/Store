@@ -10,6 +10,7 @@ from django.conf import settings
 from django.db import models
 from cart.models import Cart
 
+
 class Orders(models.Model):
     """Items in the store records."""
 
@@ -25,7 +26,6 @@ class Orders(models.Model):
 
     cart = models.ManyToManyField(Cart)
 
-    # shipped = models.BooleanField(
-    #     default=False
-    # )
-    
+    shipped = models.BooleanField(
+        default=False
+    )

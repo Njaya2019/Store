@@ -24,6 +24,7 @@ class TestCartView():
     password = 'A1990n1$'
     product_name = 'Iphone 7'
     product_amount = 8
+    product_price = 10
 
     # Initialises the client object
     client = APIClient()
@@ -52,7 +53,7 @@ class TestCartView():
 
     @pytest.fixture()
     def login(self, signup):
-        """Logs a user in."""
+        """Log a user in."""
         response = self.client.post(
             '/users/signin', {
                 "email": self.email,
@@ -67,11 +68,12 @@ class TestCartView():
 
     @pytest.fixture()
     def adds_product(self, login):
-        """A fixture to add a product."""
+        """Fixture to add a product."""
         response = self.client.post(
             '/products/add_product', {
                 "product_name": self.product_name,
                 "product_amount": self.product_amount,
+                "product_price": self.product_price,
                 }
         )
 
@@ -82,11 +84,12 @@ class TestCartView():
 
     @pytest.fixture()
     def adds_another_product(self, login):
-        """A fixture to add another product."""
+        """Fixture to add another product."""
         response = self.client.post(
             '/products/add_product', {
                 "product_name": self.product_name,
                 "product_amount": 0,
+                "product_price": self.product_price,
                 }
         )
 
@@ -94,12 +97,12 @@ class TestCartView():
         data = loads(data)
 
         return data
-    
+
     def test_amountToOrder_invalidKey(self, adds_product):
         """Tests invalid amount to order field key."""
         response = self.client.post(
             '/cart/1/add_to_cart', {
-                "product_nam": self.product_name,
+                "product_name": self.product_name,
                 }
         )
 
