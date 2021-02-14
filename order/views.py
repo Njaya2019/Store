@@ -11,7 +11,6 @@ from rest_framework.authentication import SessionAuthentication
 from django.db.models import Sum
 from .serializers import OrdersSerializer
 from items.utils import isAuthenticated
-from cart.models import Cart
 
 
 # Create your views here.
@@ -42,10 +41,6 @@ class OrdersView(APIView):
         # Checks if the request data is valid
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            # gets the sum of the total price in the cart
-            total_amount = Cart.objects.all().filter(
-                user=request.user,
-            ).aggregate(Sum('total_price'))
             # converts the date string to date object
             date_obj = datetime.datetime.strptime(
                 serializer.data['date_ordered'],
@@ -55,12 +50,22 @@ class OrdersView(APIView):
             date_ordered = date_obj.strftime(
                     '%d-%m-%y %H:%M:%S %p'
             )
+            # gets the sum of the total price in the cart
+            total_amount =\
+                serializer.data['the_total_price'][
+                    'total_price__sum'
+                ]
             # grabs the order id
             order_id = serializer.data['id']
             # grabs the user ordering
             customer_name = serializer.data['user']
             # gets the cart items to be ordered
             cart_items = serializer.data['cart']
+            if not cart_items:
+                return Response(
+                    {'error': 'add items to cart first'},
+                    status=400
+                )
             # initialises a list with two items, customer
             # name and the order id
             product_amount = [
@@ -86,7 +91,7 @@ class OrdersView(APIView):
             product_amount.extend([
                 '---------------------',
                 'total\t\t'+str(
-                    total_amount['total_price__sum']
+                    total_amount
                 )
             ])
             # Joins the list of the products and their
