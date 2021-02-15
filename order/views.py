@@ -5,6 +5,7 @@ Orders view.
 This view makes an order.
 """
 import datetime
+import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
@@ -102,6 +103,30 @@ class OrdersView(APIView):
                 product_amount
             )
             print(receit)
+            # Sends an sms to the user
+            sand_box_url = "https://api.sandbox.africastalking.com"\
+                "/version1/messaging"
+            api_Key = 'c13ef31c13abd536ff5ad57179cfc72993a'\
+                '2ff445dedbbd20bf0b9eb878e565d'
+            # request header
+            headers = {
+                "apiKey": api_Key,
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+            # request body
+            body = {
+                "username": "sandbox",
+                "to": "+254727645367",
+                "message": receit
+            }
+            # sending the request, the sms to the user
+            res = requests.post(
+                sand_box_url,
+                headers=headers,
+                data=body
+            )
+            print(res.text)
+            # returns api response
             return Response(serializer.data, status=201)
 
         # Returns an error if one the request data is invalid
