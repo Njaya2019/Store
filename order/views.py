@@ -44,7 +44,7 @@ class OrdersView(APIView):
             # converts the date string to date object
             date_obj = datetime.datetime.strptime(
                 serializer.data['date_ordered'],
-                '%Y-%m-%dT%I:%M:%S.%fZ'
+                '%Y-%m-%dT%H:%M:%S.%fZ'
             )
             # converts it back to string in a more good format
             date_ordered = date_obj.strftime(
