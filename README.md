@@ -14,11 +14,19 @@ Python
 ## Views
 ### Add product
 ```
-POST products/add_product {"product_name": "the product name", "product_amount": "product quantity an integer", "product_price": "product quantity an integer too"}
+POST products/add_product 
+    {
+        "product_name": "the product name", 
+        "product_amount": "product quantity an integer", 
+        "product_price": "product quantity an integer too"
+    }
 ```
 ### Add product to cart
 ```
-POST cart/<int:product_id>/add_to_cart {"amount_to_order": "product quantity to order"}
+POST cart/<int:product_id>/add_to_cart
+    {
+        "amount_to_order": "product quantity to order"
+    }
 ```
 ### Make an order
 ```
@@ -26,11 +34,21 @@ POST orders/make_order
 ```
 ### Signup
 ```
-POST users/signup {"email": "your email", "firstname": "your firstname", "password": "your desired password", "confirm_password": "the password you had provided in the previous field"}
+POST users/signup 
+    {
+        "email": "your email", 
+        "firstname": "your firstname", 
+        "password": "your desired password", 
+        "confirm_password": "the password you had provided in the previous field"
+    }
 ```
 ### Signin
 ```
-POST users/signin {"email": "your email", "password": "the password you had signup with"}
+POST users/signin 
+    {
+        "email": "your email",
+        "password": "the password you had signup with"
+    }
 ```
 
 ## Installation
