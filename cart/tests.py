@@ -96,7 +96,7 @@ class TestCartView():
         data = response.content
         data = loads(data)
 
-        return data
+        return data['id']
 
     def test_amountToOrder_invalidKey(self, adds_product):
         """Tests invalid amount to order field key."""
@@ -116,7 +116,7 @@ class TestCartView():
     def test_amountToOrder_greaterThanStock(self, adds_product):
         """Tests if amount to order field is greater than stock."""
         response = self.client.post(
-            '/cart/1/add_to_cart', {
+            '/cart/'+str(adds_product['id'])+'/add_to_cart', {
                 "amount_to_order": 10,
                 }
         )
@@ -146,7 +146,8 @@ class TestCartView():
     def test_productOut_ofStock(self, adds_another_product):
         """Tests if a product is out of stock."""
         response = self.client.post(
-            '/cart/1/add_to_cart', {
+            '/cart/'+str(adds_another_product) +
+            '/add_to_cart', {
                 "amount_to_order": 4,
                 }
         )

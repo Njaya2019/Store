@@ -23,7 +23,7 @@ class ProductsSerializer(serializers.ModelSerializer):
 
         model = Products
         fields = [
-            'product_name', 'product_amount',
+            'id', 'product_name', 'product_amount',
             'date_added', 'product_price',
         ]
         extra_kwargs = {
