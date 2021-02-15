@@ -78,13 +78,13 @@ class TestOrdersView():
         data = response.content
         data = loads(data)
 
-        return data
+        return data['id']
 
     @pytest.fixture()
     def adds_product_toCart(self, adds_product):
         """Fixture that adds a product to the cart."""
         response = self.client.post(
-            '/cart/1/add_to_cart', {
+            '/cart/'+str(adds_product)+'/add_to_cart', {
                 "amount_to_order": 4,
                 }
         )
