@@ -1,4 +1,4 @@
-"""Store URL Configuration
+"""Store URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -22,4 +22,11 @@ urlpatterns = [
     path('products/', include("items.urls")),
     path('cart/', include("cart.urls")),
     path('orders/', include("order.urls")),
+    path(
+        'api-auth/',
+        include(
+            'rest_framework.urls',
+            namespace='rest_framework'
+        )
+    ),
 ]
