@@ -80,6 +80,9 @@ csrftoken = 'the token on the postman cookie'
 For browsable api just login and use the API resources, you can
 signin with a google account if you have one.
 
+#### Run API in postman
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/86fd1f9646d733e5e1e8)
+
 ## Installation
 **Clone**
 ```
