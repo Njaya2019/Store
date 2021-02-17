@@ -81,3 +81,21 @@ class ProductsSerializer(serializers.ModelSerializer):
         # saves the product object
         obj_product.save()
         return obj_product
+
+
+class HomeSerializer(serializers.ModelSerializer):
+    """
+
+    Model fields.
+
+    Displays products in the home page.
+    """
+
+    class Meta:
+        """The model and fields to be serialized."""
+
+        model = Products
+        fields = [
+            'id', 'product_name', 'product_amount', 'date_added',
+            'product_price',
+        ]

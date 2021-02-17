@@ -6,11 +6,18 @@ An API where an admin add products, customers adds product items to the cart and
 ```
 Python
 ```
+
 ## Frameworks
 ```
 - Django
 - Django rest framework
 ```
+
+## Openid connect provider
+```
+- google
+```
+
 ## Views
 ### Add product
 ```
@@ -43,6 +50,7 @@ POST users/signup
     }
 ```
 ### Signin
+#### Signin via the API
 ```
 POST users/signin 
     {
@@ -50,6 +58,26 @@ POST users/signin
         "password": "the password you had signup with"
     }
 ```
+
+#### Signin via the google account
+**Note** This should be done only the browsable API.
+After being authenticated by google you'll have add
+additional information to the redirected page.
+##### The login route
+```
+GET /accounts/google/login
+```
+
+### Issueing requests to protected API routes
+#### postman clients
+For postman clients after logging in they'll have to provide **X-CSRFToken** in the request header. This token is found in the
+cookies section on postman.
+```
+csrftoken = 'the token on the postman cookie'
+```
+#### Browsable API
+For browsable api just login and use the API resources, you can
+signin with a google account if you have one.
 
 ## Installation
 **Clone**
@@ -67,7 +95,7 @@ pip install requirements.txt
 ```
 **Set environment variable for the database.**
 ```
-DATABASE_URL=psql://USER:PASSWORD@HOST:HOST/your-database
+DATABASE_URL=psql://USER:PASSWORD@HOST/your-database
 ```
 **Run migrations**
 ```
@@ -80,6 +108,7 @@ DATABASE_URL=psql://USER:PASSWORD@HOST:HOST/your-database
 ```
 python manage.py runserver
 ```
+
 ## Collaborators
 [Andrew Njaya](https://github.com/Njaya2019)
 
