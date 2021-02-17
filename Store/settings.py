@@ -31,7 +31,7 @@ SECRET_KEY = '2u4-wx!!gnvufb50+0v7vm)3ix^pyki5d7h=bd(tarbap$#@o1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['onlinestore-2021.herokuapp.com', ]
+ALLOWED_HOSTS = ['onlinestore-2021.herokuapp.com', '127.0.0.1']
 
 # Customized User model
 AUTH_USER_MODEL = 'customers.User'
@@ -44,7 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # from allauth module
+    'django.contrib.sites',
     'django.contrib.staticfiles',
+    # from allauth module
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'corsheaders',
     'rest_framework',
     "customers.apps.CustomersConfig",
@@ -52,6 +59,22 @@ INSTALLED_APPS = [
     "cart.apps.CartConfig",
     "order.apps.OrderConfig",
 ]
+
+SITE_ID = 1
+
+# allauth configurations settings
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_QUERY_EMAIL = True
+LOGIN_REDIRECT_URL = "/"
+
+# signup form
+ACCOUNT_FORMS = {'signup': 'allauth.account.forms.SignupForm'}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
