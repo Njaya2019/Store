@@ -11,6 +11,7 @@ Python
 ```
 - Django
 - Django rest framework
+- Django allauth
 ```
 
 ## Openid connect provider
