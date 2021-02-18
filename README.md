@@ -91,9 +91,19 @@ signin with a google account if you have one.
 ### Sms service - Africa’s Talking SMS gateway 
 #### The API uses sandbox
 Before making an order provide your phone number on the sandbox,
-after the order is successfully made, you should see a message
-on the sandbox as below; The customer name, date, oder serial
-number, products ordered and total price of the products.
+after the order is successfully made, you should see a similar message on the sandbox like the one below; 
+```
+order serial No. 1, customer name: Andrew
+date ordered: 18-02-21 03:40:40 AM
+---------------------
+Pdct Qty tlt
+----------------------
+Iphone7 1 400
+---------------------
+total 400
+
+a few seconds ago
+```
 
 
 ## Installation
