@@ -126,7 +126,6 @@ WSGI_APPLICATION = 'Store.wsgi.application'
 DATABASES = {}
 
 DATABASES['default'] = dj_database_url.config(
-    default=env.db("DATABASE_URL"),
     conn_max_age=600
 )
 
