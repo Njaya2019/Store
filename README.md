@@ -62,10 +62,10 @@ POST users/signin
 ```
 
 #### Signin via the google account
-**Note** This should be done only the browsable API.
-After being authenticated by google you'll have add
-additional information to the redirected page.
-##### The login route
+**Note** This should be done only on the **browsable API**.
+After the authentication by google you'll be directed to home
+view, displays a list of all products.
+##### The login route by google
 ```
 GET /accounts/google/login
 ```
@@ -73,9 +73,13 @@ GET /accounts/google/login
 ### Issueing requests to protected API routes
 #### postman clients
 For postman clients after logging in they'll have to provide **X-CSRFToken** in the request header. This token is found in the
-cookies section on postman.
+cookies section on postman in the format shown below.
 ```
 csrftoken = 'the token on the postman cookie'
+```
+##### postman csrf token request header format
+```
+X-CSRFToken: 'the token'
 ```
 #### Browsable API
 For browsable api just login and use the API resources, you can
