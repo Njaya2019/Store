@@ -33,6 +33,7 @@ class TestUsersSignUp():
     password = 'A1990n1$'
     confirm_password = 'A1990n1$'
     firstname = 'Andrew'
+    phone = '+254727645367'
 
     # Initialises the client object
     client = APIClient()
@@ -44,7 +45,8 @@ class TestUsersSignUp():
                 "email": '',
                 "password": self.password,
                 "confirm_password": self.confirm_password,
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -61,7 +63,8 @@ class TestUsersSignUp():
                 "email": self.email,
                 "password": '',
                 "confirm_password": self.confirm_password,
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -78,7 +81,8 @@ class TestUsersSignUp():
                 "email": self.email,
                 "password": self.password,
                 "confirm_password": '',
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -96,7 +100,8 @@ class TestUsersSignUp():
                 "email": self.email,
                 "password": self.password,
                 "confirm_password": self.confirm_password,
-                "firstname": ''
+                "firstname": '',
+                "phone": self.phone
                 }
         )
 
@@ -114,7 +119,8 @@ class TestUsersSignUp():
                 "email": self.email,
                 "password": self.password,
                 "confirm_password": 'n1990A1&',
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -132,7 +138,8 @@ class TestUsersSignUp():
                 "email": self.email,
                 "password": 'password',
                 "confirm_password": 'password',
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -151,7 +158,8 @@ class TestUsersSignUp():
             '/users/signup', {
                 "password": self.password,
                 "confirm_password": self.confirm_password,
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -167,7 +175,8 @@ class TestUsersSignUp():
             '/users/signup', {
                 "email": self.email,
                 "confirm_password": self.confirm_password,
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -183,7 +192,8 @@ class TestUsersSignUp():
             '/users/signup', {
                 "email": self.email,
                 'password': self.password,
-                "firstname": self.firstname
+                "firstname": self.firstname,
+                "phone": self.phone
                 }
         )
 
@@ -200,7 +210,8 @@ class TestUsersSignUp():
             '/users/signup', {
                 "email": self.email,
                 'password': self.password,
-                'confirm_password': self.confirm_password
+                'confirm_password': self.confirm_password,
+                "phone": self.phone
                 }
         )
 

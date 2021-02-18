@@ -25,6 +25,7 @@ class TestCartView():
     product_name = 'Iphone 7'
     product_amount = 8
     product_price = 10
+    phone = '+254727645367'
 
     # Initialises the client object
     client = APIClient()
@@ -41,7 +42,8 @@ class TestCartView():
                 "email": self.email,
                 "password": self.password,
                 "confirm_password": self.password,
-                "firstname": 'Andrew'
+                "firstname": 'Andrew',
+                "phone": self.phone
                 }
         )
 

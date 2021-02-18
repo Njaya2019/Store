@@ -60,6 +60,8 @@ class OrdersView(APIView):
             order_id = serializer.data['id']
             # grabs the user ordering
             customer_name = serializer.data['user']
+            # gets the user's phone number
+            phone_number = serializer.data['phone']
             # gets the cart items to be ordered
             cart_items = serializer.data['cart']
             if not cart_items:
@@ -104,8 +106,10 @@ class OrdersView(APIView):
             )
             print(receit)
             # Sends an sms to the user
+            # url
             sand_box_url = "https://api.sandbox.africastalking.com"\
                 "/version1/messaging"
+            # key
             api_Key = 'c13ef31c13abd536ff5ad57179cfc72993a'\
                 '2ff445dedbbd20bf0b9eb878e565d'
             # request header
@@ -116,7 +120,7 @@ class OrdersView(APIView):
             # request body
             body = {
                 "username": "sandbox",
-                "to": "+254727645367",
+                "to": phone_number,
                 "message": receit
             }
             # sending the request, the sms to the user
