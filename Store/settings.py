@@ -31,7 +31,10 @@ SECRET_KEY = '2u4-wx!!gnvufb50+0v7vm)3ix^pyki5d7h=bd(tarbap$#@o1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['onlinestore-2021.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'onlinestore-2021.herokuapp.com', '127.0.0.1',
+    'onlinestore-2022.herokuapp.com'
+    ]
 
 # Customized User model
 AUTH_USER_MODEL = 'customers.User'
