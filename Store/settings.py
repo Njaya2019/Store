@@ -22,7 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 env.read_env(str(BASE_DIR/".env"))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -38,7 +37,6 @@ ALLOWED_HOSTS = ['onlinestore-2021.herokuapp.com', '127.0.0.1']
 AUTH_USER_MODEL = 'customers.User'
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
