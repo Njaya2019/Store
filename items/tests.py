@@ -23,6 +23,7 @@ class TestProductsView():
     password = 'A1990n1$'
     product_name = 'Iphone 7'
     product_amount = 8
+    phone = '+254727645367'
 
     # Initialises the client object
     client = APIClient()
@@ -39,7 +40,8 @@ class TestProductsView():
                 "email": self.email,
                 "password": self.password,
                 "confirm_password": self.password,
-                "firstname": 'Andrew'
+                "firstname": 'Andrew',
+                "phone": self.phone
                 }
         )
 

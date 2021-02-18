@@ -8,6 +8,7 @@ The proxy models are profiles of the users.
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from .manager import UserManager
 
 
@@ -44,6 +45,7 @@ class User(AbstractBaseUser,  PermissionsMixin):
     date_joined = models.DateTimeField(
         default=timezone.now,
     )
+    phone = PhoneNumberField(null=False, blank=False)
 
     # Changed the default field 'username' to 'email'.
 

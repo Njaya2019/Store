@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'corsheaders',
     'rest_framework',
+    'phonenumber_field',
     "customers.apps.CustomersConfig",
     "items.apps.ItemsConfig",
     "cart.apps.CartConfig",

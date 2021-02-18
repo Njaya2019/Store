@@ -25,6 +25,10 @@ class OrdersSerializer(serializers.ModelSerializer):
         source='user.firstname',
         read_only=True
     )
+    phone = serializers.CharField(
+        source='user.phone',
+        read_only=True
+    )
     # serializer method field, a read only field
     # which gets the total_price of the products
     # ordered
@@ -39,7 +43,7 @@ class OrdersSerializer(serializers.ModelSerializer):
 
         model = Orders
         fields = [
-            'id', 'user', 'date_ordered', 'cart',
+            'id', 'user', 'phone', 'date_ordered', 'cart',
             'the_total_price',
         ]
         read_only_fields = ['user', 'date_ordered', 'cart']

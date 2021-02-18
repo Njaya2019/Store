@@ -33,7 +33,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'id', 'email', 'firstname',
-            'password', 'confirm_password',
+            'password', 'confirm_password', 'phone'
         ]
         extra_kwargs = {
             "password": {
@@ -53,6 +53,12 @@ class SignUpSerializer(serializers.ModelSerializer):
                 "error_messages": {
                     "required": "Please provide firstname key",
                     "blank": "Please provide firstname value"
+                }
+            },
+            "phone": {
+                "error_messages": {
+                    "required": "Please provide a phone number key",
+                    "blank": "Please provide a phone number"
                 }
             },
         }
@@ -100,6 +106,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         new_user = User.objects.create_user(
             email=validated_data['email'],
             firstname=validated_data['firstname'],
+            phone=validated_data['phone'],
             password=validated_data['password'],
         )
 

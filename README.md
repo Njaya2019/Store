@@ -47,7 +47,8 @@ POST users/signup
         "email": "your email", 
         "firstname": "your firstname", 
         "password": "your desired password", 
-        "confirm_password": "the password you had provided in the previous field"
+        "confirm_password": "the password you had provided in the previous field",
+        "phone": "your valid phone number"
     }
 ```
 ### Signin
@@ -83,6 +84,14 @@ signin with a google account if you have one.
 #### Run API in postman
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/86fd1f9646d733e5e1e8)
 
+### Sms service - Africa’s Talking SMS gateway 
+#### The API uses sandbox
+Before making an order provide your phone number on the sandbox,
+after the order is successfully made, you should see a message
+on the sandbox as below; The customer name, date, oder serial
+number, products ordered and total price of the products.
+
+
 ## Installation
 **Clone**
 ```
@@ -112,6 +121,9 @@ DATABASE_URL=psql://USER:PASSWORD@HOST/your-database
 ```
 python manage.py runserver
 ```
+
+**NOTE** When running __make order view__ make sure you have an
+internet connection else you'll get an internet connection error.
 
 ## Collaborators
 [Andrew Njaya](https://github.com/Njaya2019)

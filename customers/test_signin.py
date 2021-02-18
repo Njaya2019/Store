@@ -21,6 +21,7 @@ class TestUsersSignIn():
 
     email = 'njayaandrew@gmail.com'
     password = 'A1990n1$'
+    phone = '+254727645367'
 
     # Initialises the client object
     client = APIClient()
@@ -37,7 +38,8 @@ class TestUsersSignIn():
                 "email": self.email,
                 "password": self.password,
                 "confirm_password": self.password,
-                "firstname": 'Andrew'
+                "firstname": 'Andrew',
+                "phone": self.phone
                 }
         )
 
