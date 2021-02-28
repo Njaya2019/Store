@@ -56,20 +56,21 @@ class Cart(models.Model):
         super().save(*args, **kwargs)
 
 
-# This reciever updates the product stock number when a
+# This reciever updates the product quantity when a
 # user adds the product to the Cart.
 @receiver(post_save, sender=Cart, dispatch_uid="update_stock_count")
 def update_stock(sender, instance, **kwargs):
     """Update numbers of products in the store."""
     if int(instance.product.product_amount) != 0:
-        # if the difference of the amount ordered and the stock is
-        # a negative value, it leaves the stock number as it was.
+        # if the difference of the quantity ordered and the stock is
+        # a negative value, it leaves the product quantity as it was.
         if (instance.product.product_amount - instance.amount_to_order) < 0:
             instance.product.product_amount = instance.product.product_amount
         else:
-            # Updates the stock
+            # Else updates the pdates the product amount
             instance.product.product_amount -= instance.amount_to_order
     else:
-        # if stock is 0, it remains 0
+        # if the product quantity is 0, it leaves it as 0
         instance.product.product_amount = instance.product.product_amount
+    # Saves the new product quantity in the store
     instance.product.save()
