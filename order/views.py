@@ -69,7 +69,7 @@ class OrdersView(APIView):
                     {'error': 'add items to cart first'},
                     status=400
                 )
-            # initialises a list with two items, customer
+            # initialises a list with two elements, customer
             # name and the order id
             product_amount = [
                 'order serial No. '+str(order_id) +
@@ -79,8 +79,8 @@ class OrdersView(APIView):
                 'Pdct     Qty     tlt',
                 '----------------------'
             ]
-            # list comprehension that joins the product and
-            # amount in one string
+            # list comprehension that joins a product and
+            # it's total price in one string
             ordered_cart_items = [
                 item['product']+"\t" +
                 str(item['amount_to_order'])+"\t" +
@@ -97,10 +97,11 @@ class OrdersView(APIView):
                     total_amount
                 )
             ])
-            # Joins the list of the products and their
-            # quantity in a single string with a new
-            # line in the string after each element
-            # in the array
+            # Joins the list "product_amount", that is
+            # order number, customer name, the date the
+            # order was made the, products' name,
+            # quantity and their total prices each in a
+            # seperate lines.
             receit = '\n'.join(
                 product_amount
             )
@@ -110,11 +111,11 @@ class OrdersView(APIView):
             sand_box_url = "https://api.sandbox.africastalking.com"\
                 "/version1/messaging"
             # key
-            api_Key = 'c13ef31c13abd536ff5ad57179cfc72993a'\
+            api_key = 'c13ef31c13abd536ff5ad57179cfc72993a'\
                 '2ff445dedbbd20bf0b9eb878e565d'
             # request header
             headers = {
-                "apiKey": api_Key,
+                "apiKey": api_key,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             # request body

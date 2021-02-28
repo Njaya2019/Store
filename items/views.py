@@ -59,9 +59,6 @@ class HomeView(APIView):
     Displays the home page contents.
     """
 
-    authentication_classes = [SessionAuthentication, ]
-    permission_classes = [isAuthenticated, ]
-
     def get(self, request):
         """
         Get request.

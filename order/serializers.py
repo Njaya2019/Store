@@ -6,9 +6,9 @@ This serializer validates the orders's fields first.
 """
 from rest_framework import serializers
 from django.db.models import Sum
-from .models import Orders
 from cart.serializers import CartSerializer
 from cart.models import Cart
+from .models import Orders
 
 
 class OrdersSerializer(serializers.ModelSerializer):
@@ -31,7 +31,8 @@ class OrdersSerializer(serializers.ModelSerializer):
     )
     # serializer method field, a read only field
     # which gets the total_price of the products
-    # ordered
+    # ordered, that is the products the were added to
+    # the cart by the user.
     the_total_price = serializers.SerializerMethodField()
 
     def get_the_total_price(self, obj):
@@ -72,20 +73,26 @@ class OrdersSerializer(serializers.ModelSerializer):
         # If the user has items in the cart, ship the order else,
         # don't ship. This is to prevent shipping when a user
         # doesn't have items in the cart
-        # if cart_objects:
-        #     new_order.shipped = True
-        # else:
-        #     new_order.shipped = False
         for cart_item in cart_objects:
             new_order.cart.add(
                 cart_item
             )
+            # prevents the cart item to be ordered again,
+            # by the same user.
             cart_item.ordered = True
             cart_item.save()
         # saves the new order instance
         if cart_objects:
+            # if there were cart items, this changes the
+            # the new order shipped attribute to true.
+            # prevent the user from making the same order
+            # twice
             new_order.shipped = True
         else:
+            # If there weren't items in the cart, it saves
+            # the new order but the order isn't shipped untill
+            # the user adds items to the cart to ship them.
             new_order.shipped = False
+        # saves the new order
         new_order.save()
         return new_order
