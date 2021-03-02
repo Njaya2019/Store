@@ -6,6 +6,7 @@ This serializer validates the cart's fields first,
 before adding it to the store.
 """
 from rest_framework import serializers
+from customers.validators import FieldValidator
 from .models import Cart
 
 

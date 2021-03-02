@@ -6,6 +6,7 @@ This serializer validates the product's fields first,
 before adding it to the store.
 """
 from rest_framework import serializers
+from customers.validators import FieldValidator
 from .models import Products
 
 
@@ -46,6 +47,19 @@ class ProductsSerializer(serializers.ModelSerializer):
                 }
             },
         }
+    def validate(self, data):
+        """
+        Escaping characters.
+
+        Escapes characters in string values passed from
+        the form.
+        """
+        # escapes the field string values first
+        new_data = FieldValidator.escaping_characters(
+            product_name=data['product_name'],
+        )
+        data['product_name'] = new_data['product_name']
+        return data
 
     def create(self, validated_data):
         """

@@ -22,7 +22,7 @@ class Products(models.Model):
     )
 
     product_name = models.CharField(
-        max_length=30,
+        max_length=100,
         blank=False,
     )
     product_price = models.IntegerField(

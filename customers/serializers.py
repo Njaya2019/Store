@@ -70,6 +70,9 @@ class SignUpSerializer(serializers.ModelSerializer):
         A dictionary that has key value pair of all fields,
         passed.
         """
+        # escapes the field string values first
+        data = FieldValidator.escaping_characters(**data)
+        # The rest validate individual field values.
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError(
                 "The password and confirm password do not match"

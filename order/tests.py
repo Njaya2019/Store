@@ -83,7 +83,7 @@ class TestOrdersView():
         return data['id']
 
     @pytest.fixture()
-    def adds_product_toCart(self, adds_product):
+    def adds_product_tocart(self, adds_product):
         """Fixture that adds a product to the cart."""
         response = self.client.post(
             '/cart/'+str(adds_product)+'/add_to_cart', {
@@ -96,7 +96,7 @@ class TestOrdersView():
 
         return data
 
-    def test_make_order(self, adds_product_toCart):
+    def test_make_order(self, adds_product_tocart):
         """Tests an order has been successfully requested."""
         response = self.client.post(
             '/orders/make_order',
@@ -104,6 +104,6 @@ class TestOrdersView():
 
         data = response.content
         data = loads(data)
-
+        print(data)
         assert data['cart'][0]['product'] == 'Iphone 7'
         assert data['cart'][0]['amount_to_order'] == 4
