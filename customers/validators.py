@@ -5,6 +5,7 @@ Classes with methods that validate, input text,
 integers est.
 """
 import re
+from django.utils.html import escape
 
 
 class FieldValidator:
@@ -50,3 +51,17 @@ class FieldValidator:
         if not name_pattern.fullmatch(name):
             return False
         return True
+
+    @staticmethod
+    def escaping_characters(**form_data):
+        """
+        Escape characters.
+
+        Ensures that all field values passed are
+        are HTML tags safe.
+        """
+        new_formdata = {}
+        for key, value in form_data.items():
+            new_value = escape(value)
+            new_formdata.update({str(key): new_value})
+        return new_formdata

@@ -5,7 +5,6 @@ This creates a cart database for products that are
 about to be ordered.
 """
 
-import datetime
 from django.conf import settings
 from django.db import models
 from django.core.validators import (
@@ -64,11 +63,15 @@ def update_stock(sender, instance, **kwargs):
     if int(instance.product.product_amount) != 0:
         # if the difference of the quantity ordered and the stock is
         # a negative value, it leaves the product quantity as it was.
-        if (instance.product.product_amount - instance.amount_to_order) < 0:
+        # This int(str(instance.amount_to_order)) converts the django
+        # safe string first to string then to an integer.
+        if (int(instance.product.product_amount) -
+                int(str(instance.amount_to_order))) < 0:
             instance.product.product_amount = instance.product.product_amount
         else:
             # Else updates the pdates the product amount
-            instance.product.product_amount -= instance.amount_to_order
+            instance.product.product_amount -=\
+                int(str(instance.amount_to_order))
     else:
         # if the product quantity is 0, it leaves it as 0
         instance.product.product_amount = instance.product.product_amount

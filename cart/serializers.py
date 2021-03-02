@@ -6,6 +6,7 @@ This serializer validates the cart's fields first,
 before adding it to the store.
 """
 from rest_framework import serializers
+from customers.validators import FieldValidator
 from .models import Cart
 
 
@@ -46,6 +47,19 @@ class CartSerializer(serializers.ModelSerializer):
                 }
             },
         }
+
+    def validate(self, data):
+        """
+        Escaping characters.
+
+        Escapes characters in string values passed from
+        the form.
+        """
+        # escapes the field string values first
+        data = FieldValidator.escaping_characters(
+            **data
+        )
+        return data
 
     def create(self, validated_data):
         """
