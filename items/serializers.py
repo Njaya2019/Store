@@ -55,9 +55,10 @@ class ProductsSerializer(serializers.ModelSerializer):
         the form.
         """
         # escapes the field string values first
-        data = FieldValidator.escaping_characters(
-            **data
+        new_data = FieldValidator.escaping_characters(
+            product_name=data['product_name'],
         )
+        data['product_name'] = new_data['product_name']
         return data
 
     def create(self, validated_data):

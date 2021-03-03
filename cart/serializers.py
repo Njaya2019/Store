@@ -48,19 +48,6 @@ class CartSerializer(serializers.ModelSerializer):
             },
         }
 
-    def validate(self, data):
-        """
-        Escaping characters.
-
-        Escapes characters in string values passed from
-        the form.
-        """
-        # escapes the field string values first
-        data = FieldValidator.escaping_characters(
-            **data
-        )
-        return data
-
     def create(self, validated_data):
         """
         Save product to cart.

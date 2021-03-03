@@ -104,6 +104,6 @@ class TestOrdersView():
 
         data = response.content
         data = loads(data)
-
+        print(data)
         assert data['cart'][0]['product'] == 'Iphone 7'
         assert data['cart'][0]['amount_to_order'] == 4
