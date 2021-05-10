@@ -1,5 +1,4 @@
 """
-
 Orders serializer.
 
 This serializer validates the orders's fields first.
